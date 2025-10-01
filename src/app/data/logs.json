@@ -1,0 +1,28 @@
+[
+  {
+    "id": "2025-10-01-pm",
+    "date": "2025-10-01",
+    "cycle_day": 6,
+    "lunar_phase": "first_quarter",
+    "tags": [
+      "depression",
+      "grief"
+    ],
+    "symptoms": [
+      "low energy",
+      "sleeplessness",
+      "existential"
+    ],
+    "practices": [
+      "herbal infusion"
+    ],
+    "herbs": [],
+    "threads": [
+      "heart_healing"
+    ],
+    "mood": "sad",
+    "privacy": "public",
+    "notes": "This marks my first day of notetaking on Astraea. Still figuring out how I want this to be structured. Almost two weeks ago my partner of 5+ years and I broke up on the same day that my childhood dog died. So I'm quite sad, and want to log the ways in which I heal my heart. ",
+    "schema_version": 1
+  }
+]
