@@ -24,5 +24,28 @@
     "privacy": "public",
     "notes": "This marks my first day of notetaking on Astraea. Still figuring out how I want this to be structured. Almost two weeks ago my partner of 5+ years and I broke up on the same day that my childhood dog died. So I'm quite sad, and want to log the ways in which I heal my heart. ",
     "schema_version": 1
+  },
+  {
+    "id": "2025-10-02-pm",
+    "date": "2025-10-02",
+    "cycle_day": 7,
+    "lunar_phase": "waxing_gibbous",
+    "tags": [
+      "grief"
+    ],
+    "symptoms": [
+      "trouble sleeping"
+    ],
+    "practices": [
+      "run",
+      "herbal infusion"
+    ],
+    "threads": [
+      "heart_healing"
+    ],
+    "mood": "stable",
+    "privacy": "public",
+    "notes": "My digestion is regular, but I'm wondering if the potency of my overnight herbal infusions is affecting the quality of digestion. Or maybe it's the bread I ate before bed. Today my heart feels softer, I think the run really helped release some endorphins, and it always feels good to spit out phlegm that was living in my lungs in the shower after the run.",
+    "schema_version": 1
   }
 ]
