@@ -6,21 +6,21 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { Entry } from "./types";
 
 function toCSV(rows: Array<Record<string, unknown>>): string {
-  if (!rows.length) return "";
-  const cols = Object.keys(rows[0] as Record<string, unknown>);
-  const escape = (v: unknown) => `"${String(v ?? "").replace(/"/g, '""')}"`;
-  return [
-    cols.join(","),
-    ...rows.map((r) =>
-      cols
-        .map((c) => {
-          const val = (r as Record<string, unknown>)[c];
-          return escape(val);
-        })
-        .join(",")
-    ),
-  ].join("\n");
-}
+    if (!rows.length) return "";
+    const cols = Object.keys(rows[0] as Record<string, unknown>);
+    const escape = (v: unknown) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    return [
+      cols.join(","),
+      ...rows.map((r) =>
+        cols
+          .map((c) => {
+            const val = (r as Record<string, unknown>)[c];
+            return escape(val);
+          })
+          .join(",")
+      ),
+    ].join("\n");
+  }
 
 function download(text: string, filename: string, type = "text/plain") {
   const blob = new Blob([text], { type });

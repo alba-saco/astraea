@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react"; // <-- add Suspense
 import Library from "./library";
 import raw from "./data/logs.json";
 import type { Entry, Phase, Privacy } from "./types";
@@ -44,7 +44,6 @@ export default function Home() {
       const parsed = JSON.parse(draftsRaw) as unknown;
       if (!Array.isArray(parsed)) return;
 
-      // best-effort shape guard
       const drafts = parsed.filter((x) => x && typeof x === "object") as Entry[];
       const normalizedDrafts = normalize(drafts);
 
@@ -75,7 +74,10 @@ export default function Home() {
         </div>
       </header>
 
-      <Library initialEntries={entries} />
+      {/* Wrap Library in Suspense */}
+      <Suspense fallback={<p className="opacity-70">Loading library…</p>}>
+        <Library initialEntries={entries} />
+      </Suspense>
     </main>
   );
 }

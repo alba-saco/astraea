@@ -2,15 +2,17 @@ import Link from "next/link";
 import raw from "../../data/logs.json";
 import type { Entry } from "../../types";
 
-interface EntryPageProps {
-  params: {
-    id: string;
-  };
-}
+type RouteParams = { id: string };
 
-export default function EntryPage({ params }: EntryPageProps) {
+export default async function EntryPage({
+  params,
+}: {
+  params: Promise<RouteParams>;
+}) {
+  const { id } = await params;
+
   const all = raw as Entry[];
-  const e = all.find((x) => x.id === params.id);
+  const e = all.find((x) => x.id === id);
 
   if (!e || e.privacy === "private") {
     return (
@@ -62,7 +64,9 @@ export default function EntryPage({ params }: EntryPageProps) {
           <p className="whitespace-pre-wrap text-sm">{e.notes || "—"}</p>
         </section>
       ) : (
-        <p className="text-sm opacity-70 italic">Notes hidden for anonymized entry.</p>
+        <p className="text-sm opacity-70 italic">
+          Notes hidden for anonymized entry.
+        </p>
       )}
     </main>
   );

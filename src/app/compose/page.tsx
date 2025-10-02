@@ -105,14 +105,16 @@ export default function Compose() {
 
             <label className="grid gap-2">
               <span className="text-xs uppercase opacity-70">AM/PM</span>
-              <select
-                value={part}
-                onChange={(e) => setPart(e.target.value as "am" | "pm")}
-                className="h-11 rounded-xl border px-3"
-              >
-                <option value="am">AM</option>
-                <option value="pm">PM</option>
-              </select>
+                <select
+                    value={part}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                        setPart(e.target.value as "am" | "pm")
+                    }
+                    className="h-11 rounded-xl border px-3"
+                    >
+                    <option value="am">AM</option>
+                    <option value="pm">PM</option>
+                </select>
             </label>
 
             <label className="grid gap-2">
