@@ -47,5 +47,31 @@
     "privacy": "public",
     "notes": "My digestion is regular, but I'm wondering if the potency of my overnight herbal infusions is affecting the quality of digestion. Or maybe it's the bread I ate before bed. Today my heart feels softer, I think the run really helped release some endorphins, and it always feels good to spit out phlegm that was living in my lungs in the shower after the run.",
     "schema_version": 1
+  },
+  {
+    "id": "2025-10-03-am",
+    "date": "2025-10-03",
+    "cycle_day": 8,
+    "lunar_phase": "waxing_gibbous",
+    "tags": [
+      "dependency",
+      "tobacco",
+      "sugar",
+      "marijuana"
+    ],
+    "symptoms": [
+      "tired"
+    ],
+    "practices": [
+      "breathwork",
+      "meditation"
+    ],
+    "threads": [
+      "addiction"
+    ],
+    "mood": "stable",
+    "privacy": "public",
+    "notes": "I had a whole bar of Tony's chocolate last night and smoke much more weed than I wanted to. This morning it's been a struggle not to smoke weed, so I smoked a cigarette instead, which made me feel gross. Recognizing my dependency with weed and trying to cultivate a healthy relationship, as it is a very healing plant in it's own right when used in a balanced way",
+    "schema_version": 1
   }
 ]

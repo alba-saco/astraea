@@ -24,18 +24,20 @@ export default function Compose() {
     return expected ? key === expected : true;
   }, [key]);
 
-  // form state
-  const [date, setDate] = useState<string>("");
-  const [part, setPart] = useState<"am" | "pm">("am");
-  const [cycleDay, setCycleDay] = useState<number | "">("");
-  const [phase, setPhase] = useState<Phase>("full");
-  const [tags, setTags] = useState<string>("");
-  const [symptoms, setSymptoms] = useState<string>("");
-  const [practices, setPractices] = useState<string>("");
-  const [threads, setThreads] = useState<string>("");
-  const [mood, setMood] = useState<string>("");
-  const [privacy, setPrivacy] = useState<Privacy>("public");
-  const [notes, setNotes] = useState<string>("");
+    // form state
+    const [date, setDate] = useState<string>("");
+    const [part, setPart] = useState<"am" | "pm">("am");
+    const [cycleDay, setCycleDay] = useState<number | "">("");
+    const [phase, setPhase] = useState<Phase>("full");
+    const [tags, setTags] = useState<string>("");
+    const [symptoms, setSymptoms] = useState<string>("");
+    const [practices, setPractices] = useState<string>("");
+    const [threads, setThreads] = useState<string>("");
+    const [mood, setMood] = useState<string>("");
+    const [privacy, setPrivacy] = useState<Privacy>("public");
+    const [notes, setNotes] = useState<string>("");
+    const [digestionNotes, setDigestionNotes] = useState<string>("");
+    const [digestionTags, setDigestionTags] = useState<string>("");
 
   const id = date ? makeId(date, part) : "";
 
@@ -199,6 +201,26 @@ export default function Compose() {
                 onChange={(e) => setMood(e.target.value)}
                 className="h-11 rounded-xl border px-3"
               />
+            </label>
+
+            <label className="md:col-span-2 grid gap-2">
+                <span className="text-xs uppercase opacity-70">Digestion (free text)</span>
+                <textarea
+                    value={digestionNotes}
+                    onChange={(e) => setDigestionNotes(e.target.value)}
+                    className="min-h-[100px] rounded-xl border p-3"
+                    placeholder="e.g., regular, slightly sluggish after late bread; infusion feels strong…"
+                />
+            </label>
+
+            <label className="md:col-span-2 grid gap-2">
+                <span className="text-xs uppercase opacity-70">Digestion keywords (comma)</span>
+                <input
+                    value={digestionTags}
+                    onChange={(e) => setDigestionTags(e.target.value)}
+                    className="h-11 rounded-xl border px-3"
+                    placeholder="regular, sluggish, bloating"
+                />
             </label>
 
             <fieldset className="grid gap-2">

@@ -11,17 +11,20 @@ export type Phase =
 export type Privacy = "public" | "anon" | "private";
 
 export type Entry = {
-  id: string;
-  date: string;               // YYYY-MM-DD
-  cycle_day: number | null;
-  lunar_phase: Phase | string; // allow string to tolerate legacy values
-  tags: string[];
-  symptoms: string[];
-  practices: string[];
-  herbs?: string[];           // optional for now
-  threads: string[];          // narrative journeys
-  mood: string | null;
-  privacy: Privacy;
-  notes: string;
-  schema_version?: number;
-};
+    id: string;
+    date: string;
+    cycle_day: number | null;
+    lunar_phase: Phase | string;
+    tags: string[];
+    symptoms: string[];
+    practices: string[];
+    threads: string[];
+    herbs?: string[];               // future
+    mood: string | null;
+    /** NEW */
+    digestion_notes?: string | null;
+    digestion_tags?: string[];
+    privacy: Privacy;
+    notes: string;
+    schema_version?: number;
+  };
