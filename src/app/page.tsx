@@ -71,6 +71,9 @@ export default function Home() {
               Compose →
             </Link>
           )}
+          <Link href="/about" className="text-sm underline underline-offset-2">
+            About →
+          </Link>
         </div>
       </header>
 
