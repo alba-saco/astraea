@@ -73,5 +73,30 @@
     "privacy": "public",
     "notes": "I had a whole bar of Tony's chocolate last night and smoke much more weed than I wanted to. This morning it's been a struggle not to smoke weed, so I smoked a cigarette instead, which made me feel gross. Recognizing my dependency with weed and trying to cultivate a healthy relationship, as it is a very healing plant in it's own right when used in a balanced way",
     "schema_version": 1
+  },
+  {
+    "id": "2025-10-04-pm",
+    "date": "2025-10-04",
+    "cycle_day": 9,
+    "lunar_phase": "waxing_gibbous",
+    "tags": [
+      "depression"
+    ],
+    "symptoms": [
+      "existential"
+    ],
+    "practices": [
+      "breathwork",
+      "meditation",
+      "cleaning"
+    ],
+    "threads": [
+      "heart_healing",
+      "addiction"
+    ],
+    "mood": "dual",
+    "privacy": "public",
+    "notes": "I really think breathwork and meditation are carrying me through. I went to Sivananda Hatha yoga last night that Don was teaching and seeing friends and practicing lifted my heart. This morning I woke up with (and lately have been feeling) a severely sisyphean sensation. I'm not really sure why I'm here but I keep going, and ultimately I'm grateful for the mystery.",
+    "schema_version": 1
   }
 ]

@@ -34,28 +34,32 @@ function normalize(arr: Entry[]): Entry[] {
 }
 
 export default function Home() {
-  const base = normalize((raw as unknown as Entry[]) ?? []);
-  const [entries, setEntries] = useState<Entry[]>(base);
+  const [entries, setEntries] = useState<Entry[]>([]);
 
   useEffect(() => {
-    try {
-      const draftsRaw = localStorage.getItem("astraea_drafts");
-      if (!draftsRaw) return;
-      const parsed = JSON.parse(draftsRaw) as unknown;
-      if (!Array.isArray(parsed)) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/logs", { cache: "no-store" });
+        const apiLogs = (await res.json()) as Entry[];
+        if (cancelled) return;
 
-      const drafts = parsed.filter((x) => x && typeof x === "object") as Entry[];
-      const normalizedDrafts = normalize(drafts);
+        const base = normalize(apiLogs ?? []);
+        // merge drafts
+        const draftsRaw = localStorage.getItem("astraea_drafts");
+        const drafts = draftsRaw ? (JSON.parse(draftsRaw) as Entry[]) : [];
+        const byId = new Map<string, Entry>();
+        base.forEach((e) => byId.set(e.id, e));
+        normalize(drafts).forEach((e) => byId.set(e.id, e));
 
-      const byId = new Map<string, Entry>();
-      base.forEach((e) => byId.set(e.id, e));
-      normalizedDrafts.forEach((e) => byId.set(e.id, e));
-
-      setEntries(Array.from(byId.values()));
-    } catch {
-      // ignore malformed localStorage
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        setEntries(Array.from(byId.values()));
+      } catch {
+        // ignore
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (

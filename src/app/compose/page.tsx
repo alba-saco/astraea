@@ -16,7 +16,26 @@ function download(text: string, filename: string, type = "application/json") {
   URL.revokeObjectURL(url);
 }
 
+
 export default function Compose() {
+    async function saveToSite() {
+        if (!id) return;
+        const res = await fetch("/api/logs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-compose-key": (process.env.NEXT_PUBLIC_COMPOSE_KEY as string) || "", // you’ll type this in UI already
+          },
+          body: JSON.stringify(entry),
+        });
+        if (!res.ok) {
+          const msg = await res.text();
+          alert(`Save failed: ${msg}`);
+          return;
+        }
+        alert("Saved to site. Go to the Library to see it live.");
+      }
+
   // optional lightweight gate
   const [key, setKey] = useState<string>("");
   const allowed = useMemo(() => {
@@ -275,6 +294,13 @@ export default function Compose() {
                   disabled={!id}
                 >
                   Add to local drafts
+                </button>
+                <button
+                    onClick={saveToSite}
+                    className="inline-flex h-10 items-center rounded-full border px-4 text-sm hover:bg-neutral-800"
+                    disabled={!id}
+                    >
+                    Save to site
                 </button>
               </div>
             </div>
