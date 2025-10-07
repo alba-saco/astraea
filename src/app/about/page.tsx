@@ -1,10 +1,10 @@
 export default function About() {
     return (
       <main className="p-8 max-w-3xl mx-auto space-y-6">
-        <h1 className="text-2xl font-bold">About Astraea</h1>
+        <h1 className="text-2xl font-bold">About Rhythmos</h1>
         <section className="space-y-3 text-sm leading-6">
           <p>
-            Astraea is an experiment in reclaiming the value of personal health data. I publish
+            Rhythmos is an experiment in reclaiming the value of personal health data. I publish
             portions of my self-healing log as a public resource, mixing medical, spiritual, and
             symbolic systems. Some entries are anonymized; private notes are never shown.
           </p>
@@ -15,7 +15,11 @@ export default function About() {
           </p>
           <p className="opacity-80">
             Ethics: this is my data. Others should treat it as qualitative research material, not
-            medical advice. Please cite “Astraea Log” if you reuse it.
+            medical advice. Please cite “Rhythmos Log” if you reuse it.
+          </p>
+          <p className="opacity-80">
+          Rhythmos is a living experiment, a personal log system in continuous evolution.
+          It’s not a finished product or wellness tool, but a digital sketchbook for rhythm, emotion, and ecology.
           </p>
         </section>
       </main>
