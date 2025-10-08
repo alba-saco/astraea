@@ -69,9 +69,9 @@ export default function Home() {
         Rhythmos <span className="text-xs font-normal bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded-full">prototype</span>
       </h1>
         <div className="flex gap-4">
-          <Link href="/cycle" className="text-sm underline underline-offset-2">
+          {/* <Link href="/cycle" className="text-sm underline underline-offset-2">
             Cycle view →
-          </Link>
+          </Link> */}
           {process.env.NEXT_PUBLIC_COMPOSE_KEY && (
             <Link href="/compose" className="text-sm underline underline-offset-2">
               Compose →
