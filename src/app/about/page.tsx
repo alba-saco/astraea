@@ -1,27 +1,29 @@
 export default function About() {
-    return (
-      <main className="p-8 max-w-3xl mx-auto space-y-6">
-        <h1 className="text-2xl font-bold">About Rhythmos</h1>
-        <section className="space-y-3 text-sm leading-6">
-          <p>
-            Rhythmos is an experiment in reclaiming the value of personal health data. I publish
-            portions of my self-healing log as a public resource, mixing medical, spiritual, and
-            symbolic systems. Some entries are anonymized; private notes are never shown.
-          </p>
-          <p className="opacity-80">
-            What’s here: tags, practices, symptoms, mood, lunar phase, threads (narratives across
-            time), and occasional domain-specific fields (e.g., digestion). Download buttons let you
-            explore the data elsewhere.
-          </p>
-          <p className="opacity-80">
-            Ethics: this is my data. Others should treat it as qualitative research material, not
-            medical advice. Please cite “Rhythmos Log” if you reuse it.
-          </p>
-          <p className="opacity-80">
-          Rhythmos is a living experiment, a personal log system in continuous evolution.
-          It’s not a finished product or wellness tool, but a digital sketchbook for rhythm, emotion, and ecology.
-          </p>
-        </section>
-      </main>
-    );
-  }
+  return (
+    <main className="p-8 max-w-3xl mx-auto space-y-6">
+      <h1 className="text-2xl font-bold">About Rhythmos</h1>
+      <section className="space-y-3 text-sm leading-6">
+        <p>
+          Rhythmos is an experiment in non-linear, intuitive forms of logging my personal self-healing practice.
+        </p>
+        <p className="opacity-80">
+          I track things like mood, symptoms, practices, digestion, moon phase, and menstrual cycle.
+          Threads are used to track specific journeys, like heart healing, addiction, or rooting.
+        </p>
+        <p className="opacity-80">
+          In a time when research is underfunded, healthcare is inaccessible to many, 
+          and personal data is constantly extracted without consent or compensation, I want to reclaim the act of documentation. 
+          Publishing my self-studied health data and reflections is a gesture of transparency and autonomy. It’s an offering toward a more poetic, 
+          less clinical approach to healing.
+        </p>
+        <p className="opacity-80">
+          You’re welcome to reference this work as qualitative data or inspiration, please just cite “Rhythmos” if you do. This is not medical advice or instruction. 
+          It is a record of self-observation and study.
+        </p>
+        <p className="opacity-80">
+          This is an ongoing prototype – a living experiment.
+        </p>
+      </section>
+    </main>
+  );
+}
