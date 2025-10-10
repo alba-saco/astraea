@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState, Suspense } from "react"; // <-- add Suspense
 import Library from "./library";
-import raw from "./data/logs.json";
 import type { Entry, Phase, Privacy } from "./types";
 
 const CANON_PHASE: Record<string, Phase> = {
@@ -30,6 +29,8 @@ function normalize(arr: Entry[]): Entry[] {
     lunar_phase: (CANON_PHASE[e.lunar_phase] ?? "full") as Phase,
     privacy: (CANON_PRIVACY[e.privacy] ?? "public") as Privacy,
     threads: Array.isArray(e.threads) ? e.threads : [],
+    digestion_notes: e.digestion_notes ?? null,
+    digestion_tags: Array.isArray(e.digestion_tags) ? e.digestion_tags : [],
   }));
 }
 
