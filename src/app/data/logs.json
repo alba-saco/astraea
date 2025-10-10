@@ -168,5 +168,39 @@
     "privacy": "public",
     "notes": "I am trying to figure out a system that keeps my weed consumption boundaried while still enjoying it. I don't think the solution is cutting it out completely. But I did take 2 hits of a joint before sitting down to make this entry and I just can't remember anything I was going to put in, so now it's about the weed. I think I can only take 2 hits once before 4pm. This was my second time taking 2 hits and it's not even 2pm.",
     "schema_version": 1
+  },
+  {
+    "id": "2025-10-10-am",
+    "date": "2025-10-10",
+    "cycle_day": 15,
+    "lunar_phase": "waning_gibbous",
+    "tags": [
+      "nettle",
+      "ovulation",
+      "psychic"
+    ],
+    "symptoms": [
+      "sensitive stomach",
+      "overeating"
+    ],
+    "practices": [
+      "breathwork",
+      "meditation",
+      "pilates",
+      "spiritual study",
+      "herbal infusion"
+    ],
+    "threads": [
+      "heart_healing",
+      "nettle"
+    ],
+    "digestion_notes": "loose stool this morning, overate last night which I'm sure affected digestion",
+    "digestion_tags": [
+      "loose"
+    ],
+    "mood": "light",
+    "privacy": "public",
+    "notes": "My heart felt soft this morning, lighter. For the first time in a while. Part of me feels compelled to attribute it to the session with my psychic from a couple days ago. Could also be that I'm ovulating. I'm also going to start taking nettle daily in an overnight infusion. This is part of an initiative to build a relationship with a different herb each month and see what my personal interaction with it is like.",
+    "schema_version": 1
   }
 ]
