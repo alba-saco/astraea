@@ -79,30 +79,31 @@ export default function Compose() {
 
   async function saveToSite() {
     if (!id) return;
+  
+    // use the passphrase you typed into the page; fall back to the public env if present
+    const pass = key || process.env.NEXT_PUBLIC_COMPOSE_KEY || "";
+  
     try {
       const res = await fetch("/api/logs", {
         method: "POST",
         headers: {
-          "content-type": "application/json",
-          // IMPORTANT: send the passphrase you typed, NOT the public env var
-          "x-compose-key": key,
+          "Content-Type": "application/json",
+          "x-compose-key": pass,  // must match COMPOSE_WRITE_KEY or NEXT_PUBLIC_COMPOSE_KEY on the server
         },
-        // most routes parse { entry }, not a raw entry object
-        body: JSON.stringify({ entry }),
+        body: JSON.stringify(entry), // <-- send the raw entry, not { entry }
       });
-
+  
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const msg = await res.text();
-        alert(`Save failed: ${msg}`);
+        alert(`Save failed: ${data.error ?? res.statusText}`);
         return;
-        }
-      alert("Saved to site. Go to the Library to see it live.");
+      }
+      alert("Saved to site. Open the Library to see it.");
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : String(e);
-      alert(`Save failed: ${msg}`);
+      alert(`Save failed: ${e instanceof Error ? e.message : String(e)}`);
     }
   }
-
+  
   return (
     <main className="p-8 max-w-3xl mx-auto space-y-6">
       <header className="flex items-center justify-between">

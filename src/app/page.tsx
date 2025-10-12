@@ -66,18 +66,18 @@ export default function Home() {
   return (
     <main className="p-8 max-w-3xl mx-auto">
       <header className="flex items-center justify-between mb-6 gap-4">
-      <h1 className="text-2xl font-bold flex items-center gap-2">
-        Rhythmos <span className="text-xs font-normal bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded-full">prototype</span>
+      <h1 className="font-bold flex items-center gap-2">
+        Rhythmos <span className="badge-prototype">prototype</span>
       </h1>
         <div className="flex gap-4">
           {/* <Link href="/cycle" className="text-sm underline underline-offset-2">
             Cycle view →
           </Link> */}
-          {process.env.NEXT_PUBLIC_COMPOSE_KEY && (
+          {/* {process.env.NEXT_PUBLIC_COMPOSE_KEY && (
             <Link href="/compose" className="text-sm underline underline-offset-2">
               Compose →
             </Link>
-          )}
+          )} */}
           <Link href="/about" className="text-sm underline underline-offset-2">
             About →
           </Link>

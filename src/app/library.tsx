@@ -131,20 +131,23 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
   return (
     <div className="space-y-6">
       {/* Controls */}
-      <section className="p-6 border rounded-2xl grid gap-4 md:grid-cols-[2fr,1fr]">
+      <section className="p-6 rounded-2xl border bg-[var(--surface)] border-[var(--line)] shadow-sm grid gap-4 md:grid-cols-[2fr,1fr]">
         <input
           placeholder="Search notes, tags, practices…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="h-12 w-full rounded-xl border px-4 text-base leading-[1.2]
-                     placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-500"
+          className="h-12 w-full rounded-xl border border-white/10 bg-transparent
+                      px-4 text-base leading-[1.2]
+                      placeholder-[var(--text-secondary)]
+                      focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           aria-label="Search"
         />
         <select
           value={phase}
           onChange={(e) => setPhase(e.target.value)}
-          className="h-12 w-full rounded-xl border px-4 text-base leading-[1.2] bg-transparent
-                     focus:outline-none focus:ring-2 focus:ring-neutral-500"
+          className="h-12 w-full rounded-xl border border-white/10 bg-transparent
+                      px-4 text-base leading-[1.2]
+                      focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           aria-label="Filter by lunar phase"
         >
           <option value="any">Any lunar phase</option>
@@ -157,12 +160,12 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
 
         <div className="md:col-span-2 space-y-2">
           <div className="flex items-center justify-between">
-            <p className="text-xs uppercase tracking-wider opacity-70">Tags</p>
+          <p className="text-xs uppercase tracking-wider text-[var(--text-secondary)]">Tags</p>
             {selectedTags.length > 0 && (
               <button
                 onClick={() => setSelectedTags([])}
-                className="inline-flex items-center rounded-full border px-3 py-1.5
-                           text-sm leading-none hover:bg-neutral-900/10"
+                className="inline-flex items-center rounded-full border border-white/10 px-3 py-1.5
+                            text-sm leading-none hover:bg-white/5"
                 aria-label="Clear selected tags"
               >
                 Clear tags
@@ -177,13 +180,10 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
                 <button
                   key={t}
                   onClick={() => toggleTag(t)}
-                  className={`inline-flex h-10 items-center rounded-full border px-4
-                              text-sm font-medium leading-none
-                              ${
-                                active
-                                  ? "bg-emerald-600/20 border-emerald-500 text-emerald-300"
-                                  : "bg-neutral-800 border-neutral-700 text-neutral-400 hover:bg-neutral-700"
-                              }`}
+                  className={`inline-flex h-9 items-center rounded-full border px-4 text-sm font-medium leading-none
+                              ${active
+                                ? "bg-[var(--ink)] text-white border-[var(--ink)]"
+                                : "bg-[var(--surface-2)] text-[var(--ink)] border-[var(--line)] hover:bg-[var(--surface)]"}`}
                 >
                   {t}
                 </button>
@@ -201,7 +201,8 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
                 "application/json"
               )
             }
-            className="inline-flex h-10 items-center rounded-full border px-4 text-sm hover:bg-neutral-800"
+            className="inline-flex h-10 items-center rounded-full border border-white/10 px-4 text-sm
+                        text-[var(--text-primary)] hover:bg-white/5"
           >
             Download JSON
           </button>
@@ -213,7 +214,8 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
                 "text/csv"
               )
             }
-            className="inline-flex h-10 items-center rounded-full border px-4 text-sm hover:bg-neutral-800"
+            className="inline-flex h-10 items-center rounded-full border border-white/10 px-4 text-sm
+                        text-[var(--text-primary)] hover:bg-white/5"
           >
             Download CSV
           </button>
@@ -227,22 +229,22 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
         )}
 
         {filtered.map((e) => (
-          <article key={e.id} className="p-4 border rounded-lg hover:shadow transition">
+          <article key={e.id} className="p-5 rounded-2xl border bg-[var(--surface)] border-[var(--line)] shadow-sm hover:shadow-md transition">
             <header className="flex items-baseline justify-between gap-3">
               <p className="font-semibold">
-                <Link className="underline-offset-2 hover:underline" href={`/entry/${e.id}`}>
+                <Link className="underline-offset-2 hover:underline decoration-[var(--accent)]/60" href={`/entry/${e.id}`}>
                   {e.date} — {e.cycle_day !== null ? `CD ${e.cycle_day}` : "CD —"}
                 </Link>
               </p>
               <span
-                className={`text-xs px-2 py-0.5 rounded-full border uppercase tracking-wide
-                            ${PHASE_COLORS[e.lunar_phase] ?? "border-neutral-600 text-neutral-400"}`}
+                className={`text-[10px] px-2 py-0.5 rounded-full border uppercase tracking-wide
+                            ${PHASE_COLORS[e.lunar_phase] ?? "border-white/15 text-[var(--text-secondary)]"}`}
               >
                 {PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}
               </span>
             </header>
 
-            <div className="mt-3 text-sm space-y-1.5">
+            <div className="mt-3 text-sm space-y-1.5 text-[var(--text-secondary)]">
               <div>
                 <span className="font-medium">Tags:</span> {e.tags.join(", ") || "—"}
               </div>
@@ -258,18 +260,25 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
                 <span className="font-medium">Symptoms:</span>{" "}
                 {e.symptoms.join(", ") || "—"}
               </div>
+              {(e.digestion_notes || (e.digestion_tags?.length ?? 0) > 0) && (
+                <div>
+                  <span className="font-medium text-[var(--text-primary)]">Digestion:</span>{" "}
+                  {e.digestion_notes || "—"}
+                  {e.digestion_tags?.length ? (
+                    <span className="opacity-80"> — keywords: {e.digestion_tags.join(", ")}</span>
+                  ) : null}
+                </div>
+              )}
             </div>
 
             <footer className="mt-3">
               <span
-                className={`text-xs px-2 py-0.5 rounded-full border
-                            ${
-                              e.privacy === "public"
-                                ? "bg-emerald-600/20 border-emerald-600 text-emerald-300"
-                                : e.privacy === "anon"
-                                ? "bg-amber-600/20 border-amber-600 text-amber-300"
-                                : "bg-neutral-700/40 border-neutral-600 text-neutral-400"
-                            }`}
+                className={`text-[10px] px-2 py-0.5 rounded-full border
+                            ${e.privacy === "public"
+                            ? "border-[var(--accent)]/50 bg-[var(--accent)]/15 text-[var(--text-primary)]"
+                            : e.privacy === "anon"
+                            ? "border-white/15 bg-white/5 text-[var(--text-secondary)]"
+                            : "border-white/10 bg-transparent text-[var(--text-secondary)]"}`}
               >
                 {e.privacy}
               </span>
