@@ -80,30 +80,41 @@ export default function Compose() {
   async function saveToSite() {
     if (!id) return;
   
-    // use the passphrase you typed into the page; fall back to the public env if present
-    const pass = key || process.env.NEXT_PUBLIC_COMPOSE_KEY || "";
+    // Require you to type the passphrase (less confusing than falling back)
+    if (!key) {
+      alert("Enter your compose passphrase at the top before saving.");
+      return;
+    }
   
     try {
       const res = await fetch("/api/logs", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "x-compose-key": pass,  // must match COMPOSE_WRITE_KEY or NEXT_PUBLIC_COMPOSE_KEY on the server
+          "content-type": "application/json",
+          "x-compose-key": key, // must equal COMPOSE_WRITE_KEY (or NEXT_PUBLIC_COMPOSE_KEY) on the server
         },
-        body: JSON.stringify(entry), // <-- send the raw entry, not { entry }
+        body: JSON.stringify(entry), // API expects the raw entry
       });
   
-      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        alert(`Save failed: ${data.error ?? res.statusText}`);
+        let details = "";
+        try {
+          const ct = res.headers.get("content-type") || "";
+          details = ct.includes("application/json")
+            ? JSON.stringify(await res.json())
+            : (await res.text());
+        } catch {/* ignore */}
+        alert(`Save failed [${res.status} ${res.statusText}] ${details}`);
         return;
       }
+  
       alert("Saved to site. Open the Library to see it.");
     } catch (e: unknown) {
-      alert(`Save failed: ${e instanceof Error ? e.message : String(e)}`);
+      const msg = e instanceof Error ? e.message : String(e);
+      alert(`Save failed (network): ${msg}`);
     }
   }
-  
+
   return (
     <main className="p-8 max-w-3xl mx-auto space-y-6">
       <header className="flex items-center justify-between">
