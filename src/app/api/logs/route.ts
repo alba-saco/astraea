@@ -123,11 +123,18 @@ export async function POST(req: NextRequest) {
     a.date < b.date ? 1 : -1
   );
 
-  await put(BLOB_NAME, JSON.stringify(next, null, 2), {
-    access: "public",
-    contentType: "application/json",
-    token: process.env.BLOB_READ_WRITE_TOKEN,
-  });
+  try {
+    await put(BLOB_NAME, JSON.stringify(next, null, 2), {
+      access: "public",                 // or "private" if you prefer
+      contentType: "application/json",
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      allowOverwrite: true,             // <-- add this line
+    });
+  } catch (err) {
+    console.error("Blob put failed:", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: `Blob write failed: ${msg}` }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true, count: next.length });
 }
