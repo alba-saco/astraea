@@ -54,6 +54,18 @@ const PHASE_COLORS: Record<string, string> = {
   waning_crescent: "bg-indigo-600/20 border-indigo-600 text-indigo-300",
 };
 
+const phaseEmoji = (p: string) =>
+  ({
+    new: "🌑",
+    waxing_crescent: "🌒",
+    first_quarter: "🌓",
+    waxing_gibbous: "🌔",
+    full: "🌕",
+    waning_gibbous: "🌖",
+    last_quarter: "🌗",
+    waning_crescent: "🌘",
+  }[p] ?? "🌙");
+
 export default function Library({ initialEntries }: { initialEntries: Entry[] }) {
   const visible = useMemo(
     () => initialEntries.filter((e) => e.privacy !== "private"),
@@ -131,41 +143,56 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
   return (
     <div className="space-y-6">
       {/* Controls */}
-      <section className="p-6 border border-[var(--line)] rounded-2xl bg-[var(--surface)]/70">
-        <input
-          placeholder="Search notes, tags, practices…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="h-12 w-full rounded-xl border border-white/10 bg-transparent
-                      px-4 text-base leading-[1.2]
+      <section
+        className="p-6 border border-[var(--line)] rounded-2xl bg-[var(--surface)]/70
+                  grid gap-4 md:grid-cols-[minmax(0,1fr),220px] items-start"
+      >
+        {/* Search (now with label to match the select) */}
+        <label className="grid gap-1">
+          <span className="text-[11px] tracking-wide uppercase text-[var(--text-secondary)]">
+            Search
+          </span>
+          <input
+            placeholder="Search notes, tags, practices…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="h-11 w-full rounded-xl border border-[var(--line)] bg-[var(--surface-2)]
+                      px-4 text-[15px] leading-[1.15]
                       placeholder-[var(--text-secondary)]
                       focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-          aria-label="Search"
-        />
-        <select
-          value={phase}
-          onChange={(e) => setPhase(e.target.value)}
-          className="h-12 w-full rounded-xl border border-white/10 bg-transparent
-                      px-4 text-base leading-[1.2]
-                      focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-          aria-label="Filter by lunar phase"
-        >
-          <option value="any">Any lunar phase</option>
-          {Object.entries(PHASE_LABEL).map(([key, label]) => (
-            <option key={key} value={key}>
-              {label}
-            </option>
-          ))}
-        </select>
+            aria-label="Search"
+          />
+        </label>
 
+        {/* Phase (same label + matched height) */}
+        <label className="grid gap-1">
+          <span className="text-[11px] tracking-wide uppercase text-[var(--text-secondary)]">
+            Lunar phase
+          </span>
+          <select
+            value={phase}
+            onChange={(e) => setPhase(e.target.value)}
+            className="h-11 w-full rounded-xl border border-[var(--line)] bg-[var(--surface-2)]
+                      px-3 text-[14px] leading-[1.15]
+                      focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+            aria-label="Filter by lunar phase"
+          >
+            <option value="any">Any lunar phase</option>
+            {Object.entries(PHASE_LABEL).map(([key, label]) => (
+              <option key={key} value={key}>{label}</option>
+            ))}
+          </select>
+        </label>
+
+        {/* Tags */}
         <div className="md:col-span-2 space-y-2">
           <div className="flex items-center justify-between">
-          <p className="text-xs uppercase tracking-wider text-[var(--text-secondary)]">Tags</p>
+            <p className="text-xs uppercase tracking-wider text-[var(--text-secondary)]">Tags</p>
             {selectedTags.length > 0 && (
               <button
                 onClick={() => setSelectedTags([])}
                 className="inline-flex items-center rounded-full border border-white/10 px-3 py-1.5
-                            text-sm leading-none hover:bg-white/5"
+                          text-sm leading-none hover:bg-white/5"
                 aria-label="Clear selected tags"
               >
                 Clear tags
@@ -194,6 +221,7 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
           </div>
         </div>
 
+        {/* Actions */}
         <div className="md:col-span-2 flex gap-2 justify-end pt-1">
           <button
             onClick={() =>
@@ -204,7 +232,7 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
               )
             }
             className="inline-flex h-10 items-center rounded-full border border-white/10 px-4 text-sm
-                        text-[var(--text-primary)] hover:bg-white/5"
+                      text-[var(--text-primary)] hover:bg-white/5"
           >
             Download JSON
           </button>
@@ -217,7 +245,7 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
               )
             }
             className="inline-flex h-10 items-center rounded-full border border-white/10 px-4 text-sm
-                        text-[var(--text-primary)] hover:bg-white/5"
+                      text-[var(--text-primary)] hover:bg-white/5"
           >
             Download CSV
           </button>
@@ -231,55 +259,42 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
         )}
 
         {filtered.map((e) => (
-          <article
+          <Link
             key={e.id}
-            className="p-5 rounded-xl border border-[var(--line)] bg-[var(--surface)]/70 transition hover:bg-[var(--surface-2)]"
+            href={`/entry/${e.id}`}
+            className="block relative p-5 rounded-xl border border-[var(--line)] bg-[var(--surface)]/70
+                      transition hover:bg-[var(--surface-2)] focus-visible:outline-none
+                      focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
           >
-            <header className="flex items-baseline justify-between gap-3">
-              <p className="font-semibold">
-                <Link className="underline-offset-2 hover:underline decoration-[var(--accent)]/60" href={`/entry/${e.id}`}>
+            <article className="pointer-events-none">
+              <header className="flex items-baseline justify-between gap-3 relative">
+                <p className="font-semibold">
                   {e.date} — {e.cycle_day !== null ? `CD ${e.cycle_day}` : "CD —"}
-                </Link>
-              </p>
-              <span
-                className={`text-[10px] px-2 py-0.5 rounded-full border uppercase tracking-wide
-                            ${PHASE_COLORS[e.lunar_phase] ?? "border-white/15 text-[var(--text-secondary)]"}`}
-              >
-                {PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}
-              </span>
-            </header>
+                </p>
+                <span
+                  className="absolute top-4 right-4 text-[22px] leading-none select-none text-[color-mix(in oklab,var(--ink) 70%,transparent)]"
+                  title={PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}
+                >
+                  {phaseEmoji(e.lunar_phase)}
+                </span>
+              </header>
 
-            <div className="mt-3 text-sm space-y-1.5 text-[var(--text-secondary)]">
-              <div>
-                <span className="font-medium">Tags:</span> {e.tags.join(", ") || "—"}
+              <div className="mt-3 text-sm space-y-1.5 text-[var(--text-secondary)]">
+                <div>
+                  <span className="font-medium">Tags:</span> {e.tags.join(", ") || "—"}
+                </div>
+                <div>
+                  <span className="font-medium">Practices:</span> {e.practices.join(", ") || "—"}
+                </div>
+                <div>
+                  <span className="font-medium">Threads:</span> {e.threads?.join(", ") || "—"}
+                </div>
+                <div>
+                  <span className="font-medium">Symptoms:</span> {e.symptoms.join(", ") || "—"}
+                </div>
               </div>
-              <div>
-                <span className="font-medium">Practices:</span>{" "}
-                {e.practices.join(", ") || "—"}
-              </div>
-              <div>
-                <span className="font-medium">Threads:</span>{" "}
-                {e.threads?.join(", ") || "—"}
-              </div>
-              <div>
-                <span className="font-medium">Symptoms:</span>{" "}
-                {e.symptoms.join(", ") || "—"}
-              </div>
-            </div>
-
-            <footer className="mt-3">
-              <span
-                className={`text-[10px] px-2 py-0.5 rounded-full border
-                            ${e.privacy === "public"
-                            ? "border-[var(--accent)]/50 bg-[var(--accent)]/15 text-[var(--text-primary)]"
-                            : e.privacy === "anon"
-                            ? "border-white/15 bg-white/5 text-[var(--text-secondary)]"
-                            : "border-white/10 bg-transparent text-[var(--text-secondary)]"}`}
-              >
-                {e.privacy}
-              </span>
-            </footer>
-          </article>
+            </article>
+          </Link>
         ))}
       </section>
     </div>

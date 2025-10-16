@@ -17,6 +17,31 @@ async function fetchAllLogs(): Promise<Entry[]> {
   return (await res.json()) as Entry[];
 }
 
+const PHASE_LABEL: Record<string, string> = {
+  new: "New Moon",
+  waxing_crescent: "Waxing Crescent",
+  first_quarter: "First Quarter",
+  waxing_gibbous: "Waxing Gibbous",
+  full: "Full Moon",
+  waning_gibbous: "Waning Gibbous",
+  last_quarter: "Last Quarter",
+  waning_crescent: "Waning Crescent",
+};
+
+const phaseEmoji = (phase: string) => {
+  switch (phase) {
+    case "new": return "🌑";
+    case "waxing_crescent": return "🌒";
+    case "first_quarter": return "🌓";
+    case "waxing_gibbous": return "🌔";
+    case "full": return "🌕";
+    case "waning_gibbous": return "🌖";
+    case "last_quarter": return "🌗";
+    case "waning_crescent": return "🌘";
+    default: return "🌘";
+  }
+};
+
 export default async function EntryPage({
   params,
 }: {
@@ -44,6 +69,16 @@ export default async function EntryPage({
       <h1 className="text-xl font-semibold">
         {e.date} — {e.cycle_day !== null ? `CD ${e.cycle_day}` : "CD —"}
       </h1>
+
+      {/* NEW: lunar phase line */}
+      <div className="mt-1 text-sm text-[color-mix(in oklab,var(--ink) 70%,transparent)]">
+        <span className="inline-flex items-center gap-2" title={PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}>
+          <span className="text-lg leading-none select-none" aria-hidden>
+            {phaseEmoji(e.lunar_phase)}
+          </span>
+          <span>{PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}</span>
+        </span>
+      </div>
 
       <div className="space-y-1 text-sm">
         <div><span className="font-medium">Tags:</span> {e.tags.join(", ") || "—"}</div>
