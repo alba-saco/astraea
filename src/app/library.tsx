@@ -131,7 +131,7 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
   return (
     <div className="space-y-6">
       {/* Controls */}
-      <section className="p-6 rounded-2xl border bg-[var(--surface)] border-[var(--line)] shadow-sm grid gap-4 md:grid-cols-[2fr,1fr]">
+      <section className="p-6 border border-[var(--line)] rounded-2xl bg-[var(--surface)]/70">
         <input
           placeholder="Search notes, tags, practices…"
           value={query}
@@ -173,20 +173,22 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
             )}
           </div>
 
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Tag filters">
-            {allTags.map((t) => {
+          <div className="flex flex-wrap gap-x-2 gap-y-2">
+            {allTags.map((t, i) => {
               const active = selectedTags.includes(t);
               return (
-                <button
-                  key={t}
-                  onClick={() => toggleTag(t)}
-                  className={`inline-flex h-9 items-center rounded-full border px-4 text-sm font-medium leading-none
-                              ${active
-                                ? "bg-[var(--ink)] text-white border-[var(--ink)]"
-                                : "bg-[var(--surface-2)] text-[var(--ink)] border-[var(--line)] hover:bg-[var(--surface)]"}`}
-                >
-                  {t}
-                </button>
+                <div key={t} className="flex items-center gap-2">
+                  {i > 0 && <span className="text-[11px] opacity-30">•</span>}
+                  <button
+                    onClick={() => toggleTag(t)}
+                    className={`text-sm leading-none tracking-tight transition-colors
+                      ${active
+                        ? "font-medium text-[var(--ink)] underline underline-offset-4 decoration-[var(--ink)]/40"
+                        : "text-[color-mix(in oklab,var(--ink) 65%,transparent)] hover:text-[var(--ink)] hover:underline underline-offset-4"}`}
+                  >
+                    {t}
+                  </button>
+                </div>
               );
             })}
           </div>
@@ -229,7 +231,10 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
         )}
 
         {filtered.map((e) => (
-          <article key={e.id} className="p-5 rounded-2xl border bg-[var(--surface)] border-[var(--line)] shadow-sm hover:shadow-md transition">
+          <article
+            key={e.id}
+            className="p-5 rounded-xl border border-[var(--line)] bg-[var(--surface)]/70 transition hover:bg-[var(--surface-2)]"
+          >
             <header className="flex items-baseline justify-between gap-3">
               <p className="font-semibold">
                 <Link className="underline-offset-2 hover:underline decoration-[var(--accent)]/60" href={`/entry/${e.id}`}>
@@ -260,15 +265,6 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
                 <span className="font-medium">Symptoms:</span>{" "}
                 {e.symptoms.join(", ") || "—"}
               </div>
-              {(e.digestion_notes || (e.digestion_tags?.length ?? 0) > 0) && (
-                <div>
-                  <span className="font-medium text-[var(--text-primary)]">Digestion:</span>{" "}
-                  {e.digestion_notes || "—"}
-                  {e.digestion_tags?.length ? (
-                    <span className="opacity-80"> — keywords: {e.digestion_tags.join(", ")}</span>
-                  ) : null}
-                </div>
-              )}
             </div>
 
             <footer className="mt-3">

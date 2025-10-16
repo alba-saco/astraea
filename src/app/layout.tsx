@@ -1,10 +1,7 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
-
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Rhythmos",
@@ -14,9 +11,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
-      >
+      {/* fonts come from globals.css; no font variables needed here */}
+      <body className="antialiased min-h-screen">
         <div className="max-w-3xl mx-auto px-6 pt-10 pb-16">
           {children}
 
@@ -25,7 +21,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <footer className="text-xs text-center text-[var(--text-secondary)]">
             <p>
               Rhythmos is an ongoing personal prototype —{" "}
-              <Link href="/about" className="underline underline-offset-2 hover:text-[var(--text-primary)]">
+              <Link
+                href="/about"
+                className="underline underline-offset-2 hover:text-[var(--text-primary)]"
+              >
                 learn more →
               </Link>
             </p>

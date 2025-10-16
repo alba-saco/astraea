@@ -66,8 +66,8 @@ export default function Home() {
   return (
     <main className="p-8 max-w-3xl mx-auto">
       <header className="flex items-center justify-between mb-6 gap-4">
-      <h1 className="font-bold flex items-center gap-2">
-        Rhythmos <span className="badge-prototype">prototype</span>
+      <h1 className="brand-title flex items-center gap-2">
+        RHYTHMOS <span className="badge-prototype">prototype</span>
       </h1>
         <div className="flex gap-4">
           {/* <Link href="/cycle" className="text-sm underline underline-offset-2">
