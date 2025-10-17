@@ -205,7 +205,7 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
               const active = selectedTags.includes(t);
               return (
                 <div key={t} className="flex items-center gap-2">
-                  {i > 0 && <span className="text-[11px] opacity-30">•</span>}
+                  {i > 0 && <span className="tags-dot text-[11px]">•</span>}
                   <button
                     onClick={() => toggleTag(t)}
                     className={`text-sm leading-none tracking-tight transition-colors
@@ -253,47 +253,58 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
       </section>
 
       {/* Results */}
-      <section className="space-y-3">
-        {filtered.length === 0 && (
-          <p className="opacity-70 text-sm">No entries match your filters.</p>
-        )}
-
+      <section className="divide-y divide-[var(--line)]">
         {filtered.map((e) => (
           <Link
             key={e.id}
             href={`/entry/${e.id}`}
-            className="block relative p-5 rounded-xl border border-[var(--line)] bg-[var(--surface)]/70
-                      transition hover:bg-[var(--surface-2)] focus-visible:outline-none
-                      focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+            className="group block py-6 md:py-8"
           >
-            <article className="pointer-events-none">
-              <header className="flex items-baseline justify-between gap-3 relative">
-                <p className="font-semibold">
-                  {e.date} — {e.cycle_day !== null ? `CD ${e.cycle_day}` : "CD —"}
-                </p>
-                <span
-                  className="absolute top-4 right-4 text-[22px] leading-none select-none text-[color-mix(in oklab,var(--ink) 70%,transparent)]"
-                  title={PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}
-                >
-                  {phaseEmoji(e.lunar_phase)}
+            <header className="grid grid-cols-[1fr_auto] items-baseline gap-4">
+            <h2
+              className="font-semibold tracking-[-0.01em] text-[1.05rem] md:text-[1.15rem]
+                        text-[#4e3b37] !text-[#4e3b37]
+                        underline-offset-4 decoration-[var(--accent)]/40
+                        group-hover:underline"
+            >
+              {e.date} — {e.cycle_day !== null ? `CD ${e.cycle_day}` : "CD —"}
+            </h2>
+          
+              <span
+                className="text-[22px] leading-none select-none text-[color-mix(in oklab,var(--ink) 70%,transparent)]"
+                title={PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}
+                aria-label={PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}
+              >
+                {phaseEmoji(e.lunar_phase)}
+              </span>
+            </header>
+          
+            <div className="mt-2 md:mt-3 text-[0.96rem] leading-6 text-[var(--text-secondary)]">
+              <p>
+                <span className="inline-block w-24 uppercase tracking-wide text-[11px] text-[var(--text-tertiary)]">
+                  Tags
                 </span>
-              </header>
-
-              <div className="mt-3 text-sm space-y-1.5 text-[var(--text-secondary)]">
-                <div>
-                  <span className="font-medium">Tags:</span> {e.tags.join(", ") || "—"}
-                </div>
-                <div>
-                  <span className="font-medium">Practices:</span> {e.practices.join(", ") || "—"}
-                </div>
-                <div>
-                  <span className="font-medium">Threads:</span> {e.threads?.join(", ") || "—"}
-                </div>
-                <div>
-                  <span className="font-medium">Symptoms:</span> {e.symptoms.join(", ") || "—"}
-                </div>
-              </div>
-            </article>
+                {e.tags.join(", ") || "—"}
+              </p>
+              <p>
+                <span className="inline-block w-24 uppercase tracking-wide text-[11px] text-[var(--text-tertiary)]">
+                  Practices
+                </span>
+                {e.practices.join(", ") || "—"}
+              </p>
+              <p>
+                <span className="inline-block w-24 uppercase tracking-wide text-[11px] text-[var(--text-tertiary)]">
+                  Threads
+                </span>
+                {e.threads?.join(", ") || "—"}
+              </p>
+              <p>
+                <span className="inline-block w-24 uppercase tracking-wide text-[11px] text-[var(--text-tertiary)]">
+                  Symptoms
+                </span>
+                {e.symptoms.join(", ") || "—"}
+              </p>
+            </div>
           </Link>
         ))}
       </section>

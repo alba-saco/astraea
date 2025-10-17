@@ -1,22 +1,49 @@
 @import url("https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap");
 @import "tailwindcss";
 
-:root{
-  --background: #f8f5f3;     /* page */
-  --surface:    #ffffff;     /* cards / panels */
-  --surface-2:  #fcf9f7;     /* inputs, hover */
-  --ink:        #1a1412;
-  --line:       #e8e1dc;     /* hairline */
-  --ring:       #d7c8bf;
-  --font-general-sans: 'General Sans', sans-serif;
+:root {
+  --background: #f7f5f2;
+  --surface: transparent; /* list is flat */
+  --line: #e6dfd9;
+  --ink: #241e1c;
+  --text-secondary: color-mix(in oklab, var(--ink) 70%, transparent);
+  --text-tertiary: color-mix(in oklab, var(--ink) 50%, transparent);
+  --accent: #d4a373;
+
+  --accent-ink: color-mix(in oklab, var(--accent) 55%, #2b2320);
+  --accent-wash: color-mix(in oklab, var(--accent) 8%, #fbfaf9);
 }
+
 
 ::selection { background: color-mix(in oklab, var(--accent) 35%, transparent); }
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
 
-input, select, textarea {
-  background-color: var(--surface-2);
-  border-color: var(--line);
+/* Head */
+h1 {
+  font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+  letter-spacing: -0.015em;
+}
+
+input, select {
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fbfaf9;
+}
+
+input:focus, select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 22%, transparent);
+  outline: none;
+}
+
+/* Section wrapper (controls) */
+.panel{
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fbfaf9;
+  box-shadow:
+    0 0 0 1px var(--line) inset,
+    0 0 0 6px var(--accent-wash); /* subtle hue wash */
 }
 
 /* Brand title (use on the <h1>) */
@@ -26,6 +53,34 @@ input, select, textarea {
   letter-spacing: -0.01em;
   color: #4e3b37; /* warm ink */
   font-size: clamp(1.5rem, 3vw, 1.875rem);
+}
+
+/* Keep underlines for normal inline links */
+a:hover{
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--accent) 55%, currentColor);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+}
+
+/* But not for block “card” links */
+a.block:hover,
+a.group:hover { text-decoration: none; }
+
+.tags-dot{
+  color: color-mix(in oklab, var(--accent) 55%, var(--text-tertiary));
+  opacity: .55;
+}
+
+.btn{
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .6rem .9rem;
+  background: transparent;
+}
+.btn:hover{
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 50%, var(--line));
 }
 
 /* Tweak the prototype badge for legibility on light bg */
