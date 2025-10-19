@@ -42,13 +42,8 @@ const phaseEmoji = (phase: string) => {
   }
 };
 
-export default async function EntryPage({
-  params,
-}: {
-  params: Promise<RouteParams>;
-}) {
+export default async function EntryPage({ params }: { params: Promise<RouteParams> }) {
   const { id } = await params;
-
   const all = await fetchAllLogs();
   const e = all.find((x) => x.id === id);
 
@@ -66,20 +61,20 @@ export default async function EntryPage({
   return (
     <main className="p-8 max-w-3xl mx-auto space-y-4">
       <Link href="/" className="underline underline-offset-2">← Back</Link>
+
       <h1 className="text-xl font-semibold">
         {e.date} — {e.cycle_day !== null ? `CD ${e.cycle_day}` : "CD —"}
       </h1>
 
-      {/* NEW: lunar phase line */}
+      {/* lunar phase */}
       <div className="mt-1 text-sm text-[color-mix(in oklab,var(--ink) 70%,transparent)]">
         <span className="inline-flex items-center gap-2" title={PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}>
-          <span className="text-lg leading-none select-none" aria-hidden>
-            {phaseEmoji(e.lunar_phase)}
-          </span>
+          <span className="text-lg leading-none select-none" aria-hidden>{phaseEmoji(e.lunar_phase)}</span>
           <span>{PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}</span>
         </span>
       </div>
 
+      {/* meta */}
       <div className="space-y-1 text-sm">
         <div><span className="font-medium">Tags:</span> {e.tags.join(", ") || "—"}</div>
         <div><span className="font-medium">Practices:</span> {e.practices.join(", ") || "—"}</div>
@@ -96,6 +91,45 @@ export default async function EntryPage({
         )}
       </div>
 
+      {/* NEW: reflection section */}
+      {(e.baseline_prompt || e.baseline_response || (e.what_helped?.length ?? 0) > 0 || (e.what_hindered?.length ?? 0) > 0 || e.thread_notes) && (
+        <section className="p-4 border rounded-xl space-y-3">
+          <h2 className="text-sm font-medium">Reflection</h2>
+
+          {e.baseline_prompt && (
+            <p className="text-xs uppercase tracking-wide text-[var(--text-tertiary)]">
+              {e.baseline_prompt}
+            </p>
+          )}
+
+          {e.baseline_response && (
+            <p className="whitespace-pre-wrap text-sm">{e.baseline_response}</p>
+          )}
+
+          {(e.what_helped?.length ?? 0) > 0 && (
+            <div className="text-sm">
+              <span className="font-medium">What helped:</span>{" "}
+              {e.what_helped!.join(", ")}
+            </div>
+          )}
+
+          {(e.what_hindered?.length ?? 0) > 0 && (
+            <div className="text-sm">
+              <span className="font-medium">What didn’t:</span>{" "}
+              {e.what_hindered!.join(", ")}
+            </div>
+          )}
+
+          {e.thread_notes && (
+            <div className="text-sm">
+              <span className="font-medium">Thread notes:</span>
+              <p className="whitespace-pre-wrap mt-1">{e.thread_notes}</p>
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* Notes (respect privacy) */}
       {showNotes ? (
         <section className="p-4 border rounded-xl">
           <h2 className="text-sm font-medium mb-2">Notes</h2>
