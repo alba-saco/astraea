@@ -37,6 +37,13 @@ export default function Compose() {
   const [mood, setMood] = useState<string>("");
   const [privacy, setPrivacy] = useState<Privacy>("public");
   const [notes, setNotes] = useState<string>("");
+  const [herbs, setHerbs] = useState<string>("");
+  // ✳️ new states for this lunar cycle
+  const [baselinePrompt, setBaselinePrompt] = useState<string>("What lifted my baseline today?");
+  const [baselineResponse, setBaselineResponse] = useState<string>("");
+  const [whatHelped, setWhatHelped] = useState<string>("");
+  const [whatHindered, setWhatHindered] = useState<string>("");
+  const [threadNotes, setThreadNotes] = useState<string>("");
 
   // optional digestion fields (note: not persisted unless added to Entry)
   const [digestionNotes, setDigestionNotes] = useState<string>("");
@@ -52,6 +59,7 @@ export default function Compose() {
     tags: tags.split(",").map(s => s.trim()).filter(Boolean),
     symptoms: symptoms.split(",").map(s => s.trim()).filter(Boolean),
     practices: practices.split(",").map(s => s.trim()).filter(Boolean),
+    herbs: herbs.split(",").map(s=>s.trim()).filter(Boolean),
     threads: threads.split(",").map(s => s.trim()).filter(Boolean),
     digestion_notes: digestionNotes.trim() || null,
     digestion_tags: digestionTags
@@ -60,6 +68,11 @@ export default function Compose() {
       .filter(Boolean),
     mood: mood || null,
     privacy,
+    baseline_prompt: baselinePrompt || null,
+    baseline_response: baselineResponse || null,
+    what_helped: whatHelped.split(",").map(s=>s.trim()).filter(Boolean),
+    what_hindered: whatHindered.split(",").map(s=>s.trim()).filter(Boolean),
+    thread_notes: threadNotes.trim() || null,
     notes,
     schema_version: 1,
   };
@@ -190,6 +203,16 @@ export default function Compose() {
             </label>
 
             <label className="md:col-span-2 grid gap-2">
+              <span className="text-xs uppercase opacity-70">Herbs (comma)</span>
+              <input
+                value={herbs}
+                onChange={(e) => setHerbs(e.target.value)}
+                className="h-11 rounded-xl border px-3"
+                placeholder="nettle, linden, rose"
+              />
+            </label>
+
+            <label className="md:col-span-2 grid gap-2">
               <span className="text-xs uppercase opacity-70">Threads (comma separated)</span>
               <input value={threads} onChange={(e) => setThreads(e.target.value)} placeholder="heart_healing, skin_care" className="h-11 rounded-xl border px-3" />
             </label>
@@ -220,6 +243,59 @@ export default function Compose() {
                 ))}
               </div>
             </fieldset>
+
+            {/* Baseline prompt */}
+            <label className="md:col-span-2 grid gap-2">
+              <span className="text-xs uppercase opacity-70">Baseline prompt</span>
+              <input
+                value={baselinePrompt}
+                onChange={(e) => setBaselinePrompt(e.target.value)}
+                placeholder="What lifted my baseline today?"
+                className="h-11 rounded-xl border px-3"
+              />
+            </label>
+
+            <label className="md:col-span-2 grid gap-2">
+              <span className="text-xs uppercase opacity-70">Baseline response</span>
+              <input
+                value={baselineResponse}
+                onChange={(e) => setBaselineResponse(e.target.value)}
+                placeholder="20-min walk, phone call with A., nettle infusion"
+                className="h-11 rounded-xl border px-3"
+              />
+            </label>
+
+            {/* What worked / What didn’t */}
+            <label className="md:col-span-2 grid gap-2">
+              <span className="text-xs uppercase opacity-70">What helped (comma)</span>
+              <input
+                value={whatHelped}
+                onChange={(e) => setWhatHelped(e.target.value)}
+                placeholder="walk, sunlight, journaling"
+                className="h-11 rounded-xl border px-3"
+              />
+            </label>
+
+            <label className="md:col-span-2 grid gap-2">
+              <span className="text-xs uppercase opacity-70">What hindered (comma)</span>
+              <input
+                value={whatHindered}
+                onChange={(e) => setWhatHindered(e.target.value)}
+                placeholder="sugar, late screen time"
+                className="h-11 rounded-xl border px-3"
+              />
+            </label>
+
+            {/* Thread notes */}
+            <label className="md:col-span-2 grid gap-2">
+              <span className="text-xs uppercase opacity-70">Thread notes</span>
+              <textarea
+                value={threadNotes}
+                onChange={(e) => setThreadNotes(e.target.value)}
+                className="min-h-[100px] rounded-xl border p-3"
+                placeholder="play_expression: danced for 10m; pleasure_metabolism: sugar craving eased after bath…"
+              />
+            </label>
 
             <label className="md:col-span-2 grid gap-2">
               <span className="text-xs uppercase opacity-70">Notes</span>

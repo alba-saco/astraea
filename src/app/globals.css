@@ -1,17 +1,26 @@
 @import url("https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap");
 @import "tailwindcss";
 
-:root {
+:root{
+  /* Base paper */
   --background: #f7f5f2;
-  --surface: transparent; /* list is flat */
-  --line: #e6dfd9;
-  --ink: #241e1c;
-  --text-secondary: color-mix(in oklab, var(--ink) 70%, transparent);
-  --text-tertiary: color-mix(in oklab, var(--ink) 50%, transparent);
+
+  /* Warm ink scale (no pure black) */
+  --ink-100: #2a2220;   /* darkest used only for headings */
+  --ink-90:  #342c29;
+  --ink-80:  #3f3532;   /* body */
+  --ink-60:  #5b4e49;   /* secondary */
+  --ink-40:  #7d6c64;   /* tertiary */
+
+  --text-primary: var(--ink-80);
+  --text-secondary: var(--ink-60);
+  --text-tertiary: var(--ink-40);
+
+  /* Accent you already like */
   --accent: #d4a373;
 
-  --accent-ink: color-mix(in oklab, var(--accent) 55%, #2b2320);
-  --accent-wash: color-mix(in oklab, var(--accent) 8%, #fbfaf9);
+  --line: color-mix(in oklab, var(--ink-40) 22%, white);
+  --surface-2: #fbfaf9;
 }
 
 
@@ -24,27 +33,18 @@ h1 {
   letter-spacing: -0.015em;
 }
 
+h1, h2, .brand-title { color: var(--ink-100); }
+
 input, select {
   border-radius: 10px;
   border: 1px solid var(--line);
   background: #fbfaf9;
 }
 
-input:focus, select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 22%, transparent);
-  outline: none;
-}
+input, select { border: 1px solid var(--line); background: var(--surface-2); }
 
 /* Section wrapper (controls) */
-.panel{
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: #fbfaf9;
-  box-shadow:
-    0 0 0 1px var(--line) inset,
-    0 0 0 6px var(--accent-wash); /* subtle hue wash */
-}
+.panel { border: 1px solid var(--line); background: var(--surface-2); }
 
 /* Brand title (use on the <h1>) */
 .brand-title{
@@ -55,10 +55,12 @@ input:focus, select:focus {
   font-size: clamp(1.5rem, 3vw, 1.875rem);
 }
 
+a { color: var(--ink-90); text-decoration: none; }
+
 /* Keep underlines for normal inline links */
 a:hover{
   text-decoration: underline;
-  text-decoration-color: color-mix(in oklab, var(--accent) 55%, currentColor);
+  text-decoration-color: color-mix(in oklab, var(--accent) 70%, transparent);
   text-underline-offset: 3px;
   text-decoration-thickness: 2px;
 }
@@ -111,7 +113,7 @@ a.group:hover { text-decoration: none; }
 
 html, body {
   background-color: var(--background) !important;
-  color: var(--text-primary) !important;
+  color: var(--text-primary);
   font-family: "General Sans", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";

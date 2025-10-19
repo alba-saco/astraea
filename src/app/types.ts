@@ -24,6 +24,11 @@ export type Entry = {
     /** NEW */
     digestion_notes?: string | null;
     digestion_tags?: string[];
+    baseline_prompt?: string | null;   // e.g., "What lifted my baseline today?"
+    baseline_response?: string | null; // your short answer for the day
+    what_helped?: string[];            // tags: walk, sunlight, nettle, phone_call
+    what_hindered?: string[];          // tags: sugar, weed, doomscrolling
+    thread_notes?: string | null;      // free text for play_expression / pleasure_metabolism
     privacy: Privacy;
     notes: string;
     schema_version?: number;

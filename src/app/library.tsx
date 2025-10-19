@@ -43,17 +43,6 @@ const PHASE_LABEL: Record<string, string> = {
   waning_crescent: "Waning Crescent",
 };
 
-const PHASE_COLORS: Record<string, string> = {
-  new: "bg-neutral-700/40 border-neutral-500 text-neutral-300",
-  waxing_crescent: "bg-indigo-600/20 border-indigo-600 text-indigo-300",
-  first_quarter: "bg-blue-600/20 border-blue-600 text-blue-300",
-  waxing_gibbous: "bg-purple-600/20 border-purple-600 text-purple-300",
-  full: "bg-amber-600/20 border-amber-600 text-amber-300",
-  waning_gibbous: "bg-purple-600/20 border-purple-600 text-purple-300",
-  last_quarter: "bg-blue-600/20 border-blue-600 text-blue-300",
-  waning_crescent: "bg-indigo-600/20 border-indigo-600 text-indigo-300",
-};
-
 const phaseEmoji = (p: string) =>
   ({
     new: "🌑",
@@ -255,21 +244,17 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
       {/* Results */}
       <section className="divide-y divide-[var(--line)]">
         {filtered.map((e) => (
-          <Link
-            key={e.id}
-            href={`/entry/${e.id}`}
-            className="group block py-6 md:py-8"
-          >
+          <article key={e.id} className="group block py-6 md:py-8">
             <header className="grid grid-cols-[1fr_auto] items-baseline gap-4">
-            <h2
-              className="font-semibold tracking-[-0.01em] text-[1.05rem] md:text-[1.15rem]
-                        text-[#4e3b37] !text-[#4e3b37]
-                        underline-offset-4 decoration-[var(--accent)]/40
-                        group-hover:underline"
-            >
-              {e.date} — {e.cycle_day !== null ? `CD ${e.cycle_day}` : "CD —"}
-            </h2>
-          
+              <h2 className="font-semibold tracking-[-0.01em] text-[1.05rem] md:text-[1.15rem]">
+                <Link
+                  href={`/entry/${e.id}`}
+                  className="underline-offset-4 decoration-[var(--accent)]/40 hover:underline"
+                >
+                  {e.date} — {e.cycle_day !== null ? `CD ${e.cycle_day}` : "CD —"}
+                </Link>
+              </h2>
+
               <span
                 className="text-[22px] leading-none select-none text-[color-mix(in oklab,var(--ink) 70%,transparent)]"
                 title={PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}
@@ -278,7 +263,7 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
                 {phaseEmoji(e.lunar_phase)}
               </span>
             </header>
-          
+
             <div className="mt-2 md:mt-3 text-[0.96rem] leading-6 text-[var(--text-secondary)]">
               <p>
                 <span className="inline-block w-24 uppercase tracking-wide text-[11px] text-[var(--text-tertiary)]">
@@ -296,7 +281,18 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
                 <span className="inline-block w-24 uppercase tracking-wide text-[11px] text-[var(--text-tertiary)]">
                   Threads
                 </span>
-                {e.threads?.join(", ") || "—"}
+                {e.threads?.length
+                  ? e.threads.map((t, i) => (
+                      <Link
+                        key={t}
+                        href={`/thread/${encodeURIComponent(t)}`}
+                        className="text-[var(--accent)] hover:underline"
+                      >
+                        {i ? ", " : ""}
+                        {t}
+                      </Link>
+                    ))
+                  : "—"}
               </p>
               <p>
                 <span className="inline-block w-24 uppercase tracking-wide text-[11px] text-[var(--text-tertiary)]">
@@ -304,8 +300,14 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
                 </span>
                 {e.symptoms.join(", ") || "—"}
               </p>
+              <p>
+                <span className="inline-block w-24 uppercase tracking-wide text-[11px] text-[var(--text-tertiary)]">
+                  Herbs
+                </span>
+                {(e.herbs ?? []).join(", ") || "—"}
+              </p>
             </div>
-          </Link>
+          </article>
         ))}
       </section>
     </div>

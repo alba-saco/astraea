@@ -85,6 +85,7 @@ export default async function EntryPage({
         <div><span className="font-medium">Practices:</span> {e.practices.join(", ") || "—"}</div>
         <div><span className="font-medium">Threads:</span> {e.threads?.join(", ") || "—"}</div>
         <div><span className="font-medium">Symptoms:</span> {e.symptoms.join(", ") || "—"}</div>
+        <div><span className="font-medium">Herbs:</span> {(e.herbs ?? []).join(", ") || "—"}</div>
         <div><span className="font-medium">Mood:</span> {e.mood ?? "—"}</div>
         {(e.digestion_notes || (e.digestion_tags?.length ?? 0) > 0) && (
           <div>
