@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { head, put } from "@vercel/blob";
-import seed from "../../data/logs.json";
+import seed from "@/data/logs.json";
 import type { Entry, Phase, Privacy } from "../../types";
 
 const BLOB_NAME = "astraea-logs.json";

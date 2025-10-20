@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { headers } from "next/headers";
 import type { Entry } from "../../types";
+import cycles from "@/data/cycles";
+import type { CyclePlan } from "../../types";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -44,6 +46,7 @@ const phaseEmoji = (phase: string) => {
 
 export default async function EntryPage({ params }: { params: Promise<RouteParams> }) {
   const { id } = await params;
+
   const all = await fetchAllLogs();
   const e = all.find((x) => x.id === id);
 
@@ -55,6 +58,10 @@ export default async function EntryPage({ params }: { params: Promise<RouteParam
       </main>
     );
   }
+
+  const plan = (cycles as unknown as CyclePlan[]).find(
+    (c) => e.date >= c.start && e.date <= c.end
+  );
 
   const showNotes = e.privacy === "public";
 
@@ -73,6 +80,14 @@ export default async function EntryPage({ params }: { params: Promise<RouteParam
           <span>{PHASE_LABEL[e.lunar_phase] ?? e.lunar_phase}</span>
         </span>
       </div>
+
+      {plan && (
+        <p className="text-xs text-[var(--text-tertiary)]">
+          In cycle: <Link href="/cycle" className="underline underline-offset-2">{plan.start} → {plan.end}</Link>
+          {plan.herb ? ` • herb: ${plan.herb}` : ""}
+          {plan.threads?.length ? ` • threads: ${plan.threads.join(", ")}` : ""}
+        </p>
+      )}
 
       {/* meta */}
       <div className="space-y-1 text-sm">

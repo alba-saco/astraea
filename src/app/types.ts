@@ -33,3 +33,13 @@ export type Entry = {
     notes: string;
     schema_version?: number;
   };
+
+export type CyclePlan = {
+  id: string;            // e.g. "2025-10-new-moon"
+  start: string;         // "YYYY-MM-DD" (inclusive)
+  end: string;           // "YYYY-MM-DD" (inclusive)
+  threads: string[];
+  herb?: string | null;
+  baseline_prompt?: string | null;
+  notes?: string | null; // optional framing
+};
