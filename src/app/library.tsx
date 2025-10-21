@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { Entry } from "./types";
+import { cycleFor } from "@/data/cycles";
 
 function toCSV(rows: Array<Record<string, unknown>>): string {
     if (!rows.length) return "";
@@ -31,6 +32,7 @@ function download(text: string, filename: string, type = "text/plain") {
   a.click();
   URL.revokeObjectURL(url);
 }
+
 
 const PHASE_LABEL: Record<string, string> = {
   new: "New",
@@ -263,6 +265,18 @@ export default function Library({ initialEntries }: { initialEntries: Entry[] })
                 {phaseEmoji(e.lunar_phase)}
               </span>
             </header>
+
+            {(() => {
+              const plan = cycleFor(e.date);
+              return plan ? (
+                <Link
+                  href={`/cycle#${plan.cycle_id}`}
+                  className="text-xs text-[var(--text-secondary)] hover:underline"
+                >
+                  {plan.title}
+                </Link>
+              ) : null;
+            })()}
 
             <div className="mt-2 md:mt-3 text-[0.96rem] leading-6 text-[var(--text-secondary)]">
               <p>
